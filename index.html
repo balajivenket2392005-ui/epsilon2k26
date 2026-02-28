@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPSILON 2K26 | MSEC</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--r:#cc0000;--rb:#ff2200;--rg:rgba(204,0,0,.6);--o:#ff6600;--dk:#050505;--tx:#c8b89a;--td:#7a6a5a;--wh:#ede0cc}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--dk);color:var(--tx);font-family:'Oswald',sans-serif;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.12) 2px,rgba(0,0,0,.12) 4px);pointer-events:none;z-index:9997}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:.9rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(2,2,2,.97);border-bottom:1px solid rgba(204,0,0,.25);transition:.3s}
+nav.scrolled{box-shadow:0 2px 30px rgba(204,0,0,.15)}
+.nav-logo{font-family:'VT323',monospace;font-size:1.9rem;letter-spacing:.2em;color:var(--r);text-shadow:0 0 10px var(--rg);text-decoration:none;animation:flicker 6s infinite}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--td);font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;transition:.2s}
+.nav-links a:hover{color:var(--r)}
+.nav-links .reg{background:var(--r);color:var(--wh)!important;padding:.35rem 1rem;box-shadow:0 0 12px rgba(204,0,0,.4)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.burger span{display:block;width:22px;height:2px;background:var(--r)}
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:7rem 2rem 5rem;background:#000}
+#hero-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:1}
+#hero-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.25);z-index:1;pointer-events:none}
+.particles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.ember{position:absolute;border-radius:50%;animation:rise linear infinite;opacity:0}
+@keyframes rise{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:1}90%{opacity:.5}100%{transform:translateY(-100px) scale(1.5);opacity:0}}
+.lights{position:absolute;top:0;left:0;right:0;height:55px;pointer-events:none;z-index:3}
+.lights svg{width:100%;height:55px}
+.lb{animation:blink var(--d,1.5s) var(--dl,0s) ease-in-out infinite alternate}
+@keyframes blink{0%{opacity:1;filter:drop-shadow(0 0 5px var(--c))}100%{opacity:.15;filter:none}}
+.eyebrow{font-size:.68rem;letter-spacing:.4em;color:var(--r);text-transform:uppercase;margin-bottom:1.8rem;position:relative;z-index:2;animation:up 1s ease both;text-shadow:0 0 10px var(--rg)}
+.hero-title{font-family:'VT323',monospace;font-size:clamp(5rem,17vw,15rem);line-height:.9;letter-spacing:.08em;color:var(--r);text-shadow:0 0 20px rgba(255,0,0,.8),0 0 60px rgba(204,0,0,.5),4px 4px 0 rgba(0,0,0,.8);position:relative;z-index:2;animation:reveal 1.5s ease both,flicker 7s 2s infinite}
+.hero-year{display:block;font-family:'VT323',monospace;font-size:clamp(2.5rem,8vw,7rem);color:var(--o);letter-spacing:.5em;text-shadow:0 0 15px rgba(255,102,0,.7);animation:up 1s .3s ease both;position:relative;z-index:2}
+.hero-sub{margin-top:1.2rem;font-size:.88rem;color:var(--td);line-height:1.9;position:relative;z-index:2;animation:up 1s .5s ease both}
+.hero-sub strong{color:var(--tx);font-style:italic}
+.badges{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-top:.9rem;position:relative;z-index:2;animation:up 1s .6s ease both}
+.badge{font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;padding:.2rem .65rem;border:1px solid rgba(204,0,0,.3);color:rgba(200,184,154,.5);background:rgba(204,0,0,.05)}
+.btns{display:flex;gap:1rem;margin-top:2.2rem;position:relative;z-index:2;animation:up 1s .8s ease both}
+.scroll-hint{position:absolute;bottom:1.8rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:var(--td);font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;z-index:2;animation:bob 2s ease-in-out infinite}
+.scroll-line{width:1px;height:36px;background:linear-gradient(to bottom,var(--r),transparent)}
+.btn{padding:.85rem 2rem;font-family:'Oswald',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);transition:.3s;display:inline-block}
+.btn-p{background:var(--r);color:var(--wh);box-shadow:0 0 20px rgba(204,0,0,.4)}
+.btn-p:hover{background:var(--rb);box-shadow:0 0 40px rgba(204,0,0,.7);transform:translateY(-2px)}
+.btn-s{background:transparent;color:var(--tx);border:1px solid rgba(200,184,154,.3)}
+.btn-s:hover{border-color:rgba(200,184,154,.6);transform:translateY(-2px)}
+.divider{width:100%;height:3px;background:linear-gradient(90deg,transparent,var(--r) 20%,var(--o) 50%,var(--r) 80%,transparent);box-shadow:0 0 15px rgba(204,0,0,.5)}
+.ticker{background:var(--r);color:var(--wh);padding:.55rem 0;overflow:hidden;white-space:nowrap;box-shadow:0 0 20px rgba(204,0,0,.5)}
+.ticker-inner{display:inline-block;animation:tick 25s linear infinite;font-family:'VT323',monospace;letter-spacing:.3em;font-size:1.1rem}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.sec-label{font-size:.63rem;letter-spacing:.45em;color:var(--r);text-transform:uppercase;margin-bottom:.7rem;text-shadow:0 0 8px var(--rg)}
+.sec-title{font-family:'VT323',monospace;font-size:clamp(3.5rem,7vw,6rem);line-height:.9;letter-spacing:.08em;color:var(--wh);text-shadow:3px 3px 0 rgba(0,0,0,.8);margin-bottom:1rem}
+.st-line{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem}
+.st-line::before,.st-line::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(204,0,0,.5))}
+.st-line::after{background:linear-gradient(90deg,rgba(204,0,0,.5),transparent)}
+.dot{width:8px;height:8px;background:var(--r);transform:rotate(45deg);box-shadow:0 0 10px var(--r),0 0 20px var(--rg);animation:pulse 2s ease-in-out infinite}
+#about{padding:6rem 2rem;background:linear-gradient(180deg,var(--dk),#080303 50%,var(--dk))}
+.about-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-txt{color:var(--td);line-height:2;font-size:.95rem}
+.about-txt p{margin-bottom:1.1rem}
+.about-txt strong{color:var(--o);font-style:italic}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.stat{background:rgba(10,4,4,.9);border:1px solid rgba(204,0,0,.2);padding:1.6rem;position:relative;overflow:hidden;clip-path:polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%);transition:.3s}
+.stat::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--r),var(--o))}
+.stat:hover{border-color:rgba(204,0,0,.5);transform:translateY(-3px)}
+.stat-n{font-family:'VT323',monospace;font-size:3.8rem;color:var(--r);line-height:1;text-shadow:0 0 15px var(--rg)}
+.stat-l{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--td);margin-top:.2rem}
+#events{padding:6rem 2rem;background:#0f0a08}
+.ev-in{max-width:1150px;margin:0 auto}
+.ev-hdr{text-align:center;margin-bottom:3rem}
+.tabs{display:flex;justify-content:center;margin-bottom:2.5rem;border:1px solid rgba(204,0,0,.3);width:fit-content;margin-left:auto;margin-right:auto;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);overflow:hidden}
+.tab{padding:.65rem 1.8rem;font-family:'Oswald',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;border:none;background:transparent;color:var(--td);transition:.3s}
+.tab.active{background:var(--r);color:var(--wh)}
+.tab:hover:not(.active){color:var(--r);background:rgba(204,0,0,.08)}
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.4rem}
+.ev-card{background:rgba(8,3,3,.95);border:1px solid rgba(204,0,0,.15);overflow:hidden;position:relative;clip-path:polygon(0 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%);transition:border-color .4s,box-shadow .4s;cursor:pointer;display:none}
+.ev-card.show{display:block;animation:cardIn .35s ease both}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.ev-card::after{content:'';position:absolute;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--r),var(--o));transition:width .4s}
+.ev-card:hover{border-color:rgba(204,0,0,.45);box-shadow:0 18px 45px rgba(0,0,0,.6)}
+.ev-card:hover::after{width:100%}
+.ev-img{width:100%;height:180px;object-fit:cover;display:block;transition:filter .4s,transform .4s;filter:brightness(.65) saturate(.75)}
+.ev-card:hover .ev-img{filter:brightness(.85) saturate(1.1);transform:scale(1.04)}
+.ev-body{padding:1.6rem;position:relative}
+.ev-num{font-family:'VT323',monospace;font-size:4.5rem;color:rgba(204,0,0,.07);position:absolute;top:-10px;right:.8rem;line-height:1;pointer-events:none}
+.ev-name{font-family:'VT323',monospace;font-size:2rem;letter-spacing:.05em;color:var(--wh);margin-bottom:.6rem;transition:color .3s}
+.ev-card:hover .ev-name{color:var(--r)}
+.ev-desc{font-size:.78rem;color:var(--td);line-height:1.7;margin-bottom:1rem}
+.ev-meta{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.meta{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .55rem;border:1px solid rgba(204,0,0,.25);background:rgba(204,0,0,.06);color:rgba(204,0,0,.7)}
+.ev-link{font-size:.7rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--r);text-decoration:none;border-bottom:1px solid rgba(204,0,0,.3);padding-bottom:1px;transition:.2s}
+.overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.96);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;backdrop-filter:blur(4px)}
+.overlay.on{display:flex}
+.modal{width:100%;max-width:860px;min-height:100vh;background:radial-gradient(ellipse 100% 60% at 50% 0%,#1a0000,#050202 50%,#020000);border-left:1px solid rgba(204,0,0,.2);border-right:1px solid rgba(204,0,0,.2);animation:mSlide .4s ease;position:relative}
+@keyframes mSlide{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.modal::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.08) 3px,rgba(0,0,0,.08) 6px);pointer-events:none;z-index:1}
+.m-bar{position:sticky;top:0;background:rgba(2,0,0,.97);border-bottom:1px solid rgba(204,0,0,.3);padding:.9rem 1.8rem;display:flex;align-items:center;justify-content:space-between;z-index:10}
+.m-brand{font-family:'VT323',monospace;font-size:1.2rem;color:var(--r);letter-spacing:.2em}
+.m-close{background:none;border:1px solid rgba(204,0,0,.4);color:var(--r);font-family:'VT323',monospace;font-size:1.1rem;letter-spacing:.15em;padding:.35rem .9rem;cursor:pointer;transition:.3s;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%)}
+.m-close:hover{background:rgba(204,0,0,.2)}
+.m-img{width:100%;height:260px;object-fit:cover;filter:brightness(.55) saturate(.7);display:block;position:relative;z-index:2}
+.m-hero{padding:2.5rem 2.5rem 1.8rem;position:relative;z-index:2;border-bottom:1px solid rgba(204,0,0,.15)}
+.m-type{font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--o);margin-bottom:.7rem}
+.m-title{font-family:'VT323',monospace;font-size:clamp(2.8rem,7vw,5.5rem);line-height:.9;letter-spacing:.08em;color:var(--r);text-shadow:0 0 20px rgba(204,0,0,.6),3px 3px 0 rgba(0,0,0,.8);margin-bottom:1.2rem}
+.m-tags{display:flex;gap:.7rem;flex-wrap:wrap}
+.m-tag{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;padding:.28rem .75rem;border:1px solid rgba(204,0,0,.3);background:rgba(204,0,0,.08);color:rgba(204,0,0,.8)}
+.m-body{padding:2.5rem;position:relative;z-index:2}
+.m-body p{font-size:.95rem;color:var(--td);line-height:1.9;margin-bottom:.9rem;border-left:2px solid rgba(204,0,0,.2);padding-left:1.1rem}
+.m-body p strong{color:var(--o);font-style:italic}
+.rounds-ttl{font-family:'VT323',monospace;font-size:1.9rem;color:var(--r);letter-spacing:.1em;margin:2rem 0 1.2rem;border-left:3px solid var(--r);padding-left:.9rem}
+.rounds{display:flex;flex-direction:column;gap:.9rem}
+.round{background:rgba(15,5,5,.9);border:1px solid rgba(204,0,0,.15);border-left:3px solid var(--o);padding:1.3rem 1.3rem 1.3rem 1.7rem;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);transition:.3s}
+.round:hover{border-left-color:var(--r);transform:translateX(4px)}
+.round-n{font-size:.8rem;color:var(--o);letter-spacing:.2em;margin-bottom:.25rem}
+.round-h{font-size:.95rem;font-weight:600;color:var(--wh);letter-spacing:.04em;margin-bottom:.4rem}
+.round-d{font-size:.82rem;color:var(--td);line-height:1.7}
+.m-cta{margin-top:2.5rem;padding-top:1.8rem;border-top:1px solid rgba(204,0,0,.15);display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+.m-back{background:none;border:1px solid rgba(200,184,154,.3);color:var(--tx);font-family:'Oswald',sans-serif;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;padding:.75rem 1.4rem;cursor:pointer;clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);transition:.3s}
+.m-back:hover{border-color:rgba(200,184,154,.6);color:var(--wh)}
+#schedule{padding:6rem 2rem;background:linear-gradient(180deg,#020202,#060202)}
+.sch-in{max-width:860px;margin:0 auto}
+.sch-hdr{text-align:center;margin-bottom:3.5rem}
+.day-lbl{font-family:'VT323',monospace;font-size:1.4rem;letter-spacing:.2em;color:var(--r);margin-bottom:1.8rem;border-left:3px solid var(--r);padding-left:.9rem}
+.tl{position:relative;padding-left:2.2rem;border-left:1px solid rgba(204,0,0,.25)}
+.tl-item{position:relative;padding:0 0 2.2rem 1.8rem;transition:transform .3s}
+.tl-item:hover{transform:translateX(6px)}
+.tl-item::before{content:'';position:absolute;left:-6px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--r);box-shadow:0 0 10px var(--r),0 0 20px var(--rg);animation:pulse 2s ease-in-out infinite}
+.tl-time{font-family:'VT323',monospace;font-size:.95rem;color:var(--o);letter-spacing:.1em;margin-bottom:.15rem}
+.tl-ev{font-size:.95rem;font-weight:500;color:var(--tx);letter-spacing:.04em;margin-bottom:.15rem}
+.tl-v{font-size:.75rem;color:var(--td);font-style:italic}
+#cta{padding:7rem 2rem;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 80% 80% at 50% 50%,#150000,var(--dk) 70%)}
+#cta::before{content:'EPSILON';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'VT323',monospace;font-size:28vw;color:rgba(204,0,0,.03);pointer-events:none;white-space:nowrap}
+.cta-ttl{font-family:'VT323',monospace;font-size:clamp(3rem,9vw,8rem);line-height:.95;color:var(--wh);text-shadow:3px 3px 0 rgba(0,0,0,.8);position:relative;z-index:1}
+.cta-ttl span{color:var(--r);text-shadow:0 0 20px var(--rg),0 0 60px rgba(204,0,0,.3)}
+.cta-sub{font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;color:var(--td);margin:1.3rem auto 2.2rem;max-width:480px;position:relative;z-index:1}
+.perks{display:flex;gap:2rem;justify-content:center;margin-top:1.8rem;font-size:.68rem;color:var(--td);letter-spacing:.15em;text-transform:uppercase;position:relative;z-index:1;flex-wrap:wrap}
+.perks span::before{content:'✦ ';color:var(--r)}
+#contact{padding:6rem 2rem;background:#0f0a08}
+.con-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.con-item{display:flex;gap:.9rem;margin-bottom:1.4rem;align-items:flex-start}
+.con-ico{font-size:1.1rem;margin-top:.15rem}
+.con-lbl{font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--r);margin-bottom:.25rem}
+.con-val{color:var(--td);font-size:.85rem;line-height:1.7}
+.coord-section{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(204,0,0,.15)}
+.map-wrap{margin-top:1.8rem;border:1px solid rgba(204,0,0,.25);overflow:hidden;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)}
+.map-wrap iframe{width:100%;height:220px;border:0;display:block;filter:invert(90%) hue-rotate(180deg) saturate(1.2)}
+.map-link{display:block;text-align:center;padding:.6rem;background:rgba(204,0,0,.1);color:var(--r);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border-top:1px solid rgba(204,0,0,.2);transition:background .2s}
+.map-link:hover{background:rgba(204,0,0,.2)}
+.form{display:flex;flex-direction:column;gap:.9rem}
+.fi{background:rgba(8,3,3,.9);border:1px solid rgba(204,0,0,.2);padding:.85rem 1rem;color:var(--tx);font-family:'Oswald',sans-serif;font-size:.85rem;outline:none;transition:border-color .3s;resize:none}
+.fi:focus{border-color:rgba(204,0,0,.6)}
+.fi::placeholder{color:var(--td);opacity:.6}
+textarea.fi{min-height:110px}
+footer{background:#030101;border-top:1px solid rgba(204,0,0,.2);padding:2.5rem 2rem}
+.ft-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:2.5rem;padding-bottom:2rem;border-bottom:1px solid rgba(204,0,0,.1)}
+.ft-logo{font-family:'VT323',monospace;font-size:2.3rem;color:var(--r);text-shadow:0 0 15px var(--rg);display:block;margin-bottom:.7rem;animation:flicker 8s infinite}
+.ft-p{font-size:.75rem;color:var(--td);line-height:1.8;max-width:240px}
+.ft-col h4{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--r);margin-bottom:.9rem}
+.ft-col a{display:block;font-size:.78rem;color:var(--td);text-decoration:none;margin-bottom:.55rem;letter-spacing:.04em;transition:color .2s}
+.ft-col a:hover{color:var(--r)}
+.ft-copy{max-width:1100px;margin:1.8rem auto 0;text-align:center;font-size:.67rem;letter-spacing:.08em;color:rgba(122,106,90,.5)}
+@keyframes flicker{0%,88%,92%,100%{opacity:1}89%{opacity:.6}91%{opacity:.4}}
+@keyframes up{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+@keyframes reveal{0%{opacity:0;filter:blur(20px) brightness(3);letter-spacing:.4em}60%{filter:blur(2px) brightness(1.5)}100%{opacity:1;filter:blur(0) brightness(1);letter-spacing:.08em}}
+@keyframes pulse{0%,100%{box-shadow:0 0 6px var(--r),0 0 12px var(--rg)}50%{box-shadow:0 0 15px var(--r),0 0 30px var(--rg)}}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+@media(max-width:768px){
+  nav{padding:.9rem 1.2rem}
+  .nav-links{display:none;flex-direction:column;position:fixed;top:56px;left:0;right:0;background:rgba(3,1,1,.98);padding:1.5rem;border-bottom:1px solid rgba(204,0,0,.2)}
+  .nav-links.open{display:flex}
+  .burger{display:flex}
+  .about-in,.con-in{grid-template-columns:1fr;gap:2.5rem}
+  .ft-in{grid-template-columns:1fr;gap:1.5rem}
+  .m-body,.m-hero{padding:1.5rem}
+  .m-img{height:180px}
+  .btns{flex-direction:column;align-items:center}
+}
+</style>
+</head>
+<body>
+<div id="modals"></div>
+<nav id="nav">
+  <a href="#hero" class="nav-logo">e EPSILON</a>
+  <ul class="nav-links" id="nl">
+    <li><a href="#about">About</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a id="nav-reg" href="#" target="_blank" class="reg">Register</a></li>
+  </ul>
+  <div class="burger" onclick="document.getElementById('nl').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<section id="hero">
+  <video id="hero-video" autoplay muted loop playsinline>
+    <source src="https://res.cloudinary.com/dngjgyjx2/video/upload/v1772300894/whatsapp-video-2026-02-28-at-105551-pm_95ULhpjN_q70x1w.mp4" type="video/mp4">
+  </video>
+  <div id="hero-overlay"></div>
+  <div class="lights"><svg id="lsvg" xmlns="http://www.w3.org/2000/svg"></svg></div>
+  <div class="particles" id="pt"></div>
+  <div class="eyebrow">A National Level Technical Symposium</div>
+  <h1 class="hero-title">EPSILON<span class="hero-year">2 K 2 6</span></h1>
+  <p class="hero-sub"><strong>Meenakshi Sundararajan Engineering College</strong> - Chennai<br>I.I.E.T. Society - AICTE Approved - Anna University</p>
+  <div class="badges">
+    <span class="badge">NAAC A Grade</span>
+    <span class="badge">NBA Accredited</span>
+    <span class="badge">Anna University</span>
+    <span class="badge">AICTE Approved</span>
+  </div>
+  <div class="btns">
+    <a href="#events" class="btn btn-p">Explore Events</a>
+    <a id="hero-reg" href="#" target="_blank" class="btn btn-s">Register Now</a>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div><span>Scroll</span></div>
+</section>
+<div class="divider"></div>
+<div class="ticker"><span class="ticker-inner">EPSILON 2K26 -- MSEC -- CHENNAI -- TECHNICAL SYMPOSIUM -- CASH PRIZES -- THE UPSIDE DOWN -- EPSILON 2K26 -- MSEC -- CHENNAI -- TECHNICAL SYMPOSIUM -- CASH PRIZES -- THE UPSIDE DOWN --</span></div>
+<section id="about">
+  <div class="about-in">
+    <div>
+      <div class="sec-label">// About the Event</div>
+      <h2 class="sec-title">EPSILON<br>2K26</h2>
+      <div class="st-line"><div class="dot"></div></div>
+      <div class="about-txt">
+        <p>Welcome to <strong>Epsilon 2K26</strong> - A National Level Technical Symposium of MSEC. A battleground for the brightest minds, where innovation meets passion.</p>
+        <p>Epsilon brings together students from across the nation to compete, collaborate, and celebrate the spirit of engineering.</p>
+        <p>Featuring <strong>exciting cash prizes</strong>, workshops by industry experts, and an electrifying atmosphere - this is the event of the year.</p>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n">9+</div><div class="stat-l">Events</div></div>
+      <div class="stat"><div class="stat-n">500+</div><div class="stat-l">Participants</div></div>
+      <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Colleges</div></div>
+      <div class="stat"><div class="stat-n">BIG</div><div class="stat-l">Cash Prizes</div></div>
+    </div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="events">
+  <div class="ev-in">
+    <div class="ev-hdr">
+      <div class="sec-label">// What Awaits You</div>
+      <h2 class="sec-title">EVENTS</h2>
+      <div class="st-line"><div class="dot"></div></div>
+      <p style="color:var(--td);font-size:.75rem;letter-spacing:.15em;text-transform:uppercase">Click any event card to view full details</p>
+    </div>
+    <div class="tabs">
+      <button class="tab active" onclick="filterEv('tech',this)">Technical Events</button>
+      <button class="tab" onclick="filterEv('nontech',this)">Non-Technical Events</button>
+    </div>
+    <div class="ev-grid" id="grid"></div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="schedule">
+  <div class="sch-in">
+    <div class="sch-hdr">
+      <div class="sec-label">// Plan Your Day</div>
+      <h2 class="sec-title">SCHEDULE</h2>
+      <div class="st-line"><div class="dot"></div></div>
+    </div>
+    <div class="day-lbl">Day 01 - Event Date TBA</div>
+    <div class="tl" id="tl"></div>
+  </div>
+</section>
+<div class="divider"></div>
+<section id="cta">
+  <h2 class="cta-ttl">READY TO<br><span>UNLEASH</span><br>YOUR POTENTIAL?</h2>
+  <p class="cta-sub">Join hundreds of students competing for glory and cash prizes</p>
+  <a id="cta-reg" href="#" target="_blank" class="btn btn-p" style="font-size:.95rem;padding:.95rem 2.8rem">Register for Epsilon 2K26</a>
+  <div class="perks"><span>Free Entry</span><span>Cash Prizes</span><span>Exciting Events</span></div>
+</section>
+<section id="contact">
+  <div class="con-in">
+    <div>
+      <div class="sec-label">// Get in Touch</div>
+      <h2 class="sec-title">CONTACT</h2>
+      <div class="st-line"><div class="dot"></div></div>
+      <p style="color:var(--td);font-size:.85rem;margin-bottom:1.8rem;line-height:1.8">Have questions about events or registration? Reach out and we will get back to you.</p>
+      <div class="con-item">
+        <div class="con-ico">📍</div>
+        <div><div class="con-lbl">Address</div><div class="con-val">#363, Arcot Road, Kodambakkam, Chennai - 600024</div></div>
+      </div>
+      <div class="con-item">
+        <div class="con-ico">✉</div>
+        <div><div class="con-lbl">Email</div><div class="con-val">epsilon2k26@msec.ac.in</div></div>
+      </div>
+      <div class="con-item">
+        <div class="con-ico">🕐</div>
+        <div><div class="con-lbl">Timings</div><div class="con-val">9:00 AM - 5:00 PM</div></div>
+      </div>
+      <div class="coord-section">
+        <div class="sec-label" style="margin-bottom:1rem">// Student Coordinators</div>
+        <div class="con-item">
+          <div class="con-ico">📞</div>
+          <div><div class="con-lbl">Coordinator 1</div><div class="con-val" style="color:var(--tx);font-size:.95rem">[Add Mobile Number]</div></div>
+        </div>
+        <div class="con-item">
+          <div class="con-ico">📞</div>
+          <div><div class="con-lbl">Coordinator 2</div><div class="con-val" style="color:var(--tx);font-size:.95rem">[Add Mobile Number]</div></div>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.566623512565!2d80.20960491482253!3d13.052431990797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5267c25ec4b7b9%3A0x7c2a4f5e1fc8fbfe!2sMeenakshi%20Sundararajan%20Engineering%20College!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <a href="https://maps.google.com/?q=Meenakshi+Sundararajan+Engineering+College+Chennai" target="_blank" class="map-link">Open in Google Maps</a>
+      </div>
+    </div>
+    <form onsubmit="return false" class="form">
+      <input class="fi" type="text" placeholder="Your Name">
+      <input class="fi" type="email" placeholder="Email Address">
+      <input class="fi" type="text" placeholder="College Name">
+      <textarea class="fi" placeholder="Your Message"></textarea>
+      <button type="submit" class="btn btn-p" style="border:none;width:100%">Send Message</button>
+    </form>
+  </div>
+</section>
+<footer>
+  <div class="ft-in">
+    <div>
+      <span class="ft-logo">e EPSILON 2K26</span>
+      <p class="ft-p">A National Level Technical Symposium by Meenakshi Sundararajan Engineering College, Chennai.</p>
+    </div>
+    <div class="ft-col">
+      <h4>Quick Links</h4>
+      <a href="#about">About</a>
+      <a href="#events">Events</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="ft-col" id="ft-ev"><h4>Events</h4></div>
+  </div>
+  <div class="ft-copy">2026 EPSILON 2K26 - Meenakshi Sundararajan Engineering College - Designed with love by MSEC Students</div>
+</footer>
+<script>
+// Per-event registration form links
+var EVENT_FORMS = {
+  'spark':    'https://forms.gle/N2ZLmPYyNPuG3WzW6',
+  'connexion':'https://forms.gle/h627HTRAZS1x44zc6',
+  'd2':       'https://forms.gle/HD2KL1ynJK3YGUe28',
+  'blackout': 'https://forms.gle/yNRFeMDjYG4baVcM6',
+  'thinklink':'https://forms.gle/Lw5Y2RCfCNRHogUv5',
+  'paper':    'https://forms.gle/tYdfyMJnt1xaHvUU6',
+  'analog':   'https://forms.gle/R3Zbgk1Zq5QSe5oc6',
+  'ludo':     'https://forms.gle/mwj8LjzEMPSzV9Bd9',
+  'idea':     'https://forms.gle/HhFiQQ9au7eLMXpp7'
+};
+
+// General register buttons (hero + nav + cta) go to events section to pick an event
+(function() {
+  var ids = ['nav-reg', 'hero-reg', 'cta-reg'];
+  ids.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) { el.href = '#events'; el.removeAttribute('target'); }
+  });
+})();
+
+var EV = [
+  {id:'analog', cat:'tech', num:'01', name:'Analog Arena', form:'https://docs.google.com/forms/d/e/1FAIpQLScphhGuN8UXakck3k7bri6S1OvtrE3nw1qoS1NGaG2O-qXcfA/viewform?usp=sharing&ouid=101277837040012249193',
+   img:'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=75',
+   desc:'Real-time circuit analysis, component selection and breadboard implementation.',
+   tags:['EEE / ECE','Team of 2','Hands-on'],
+   type:'Technical Event',
+   full:'A hands-on competition in circuit analysis and analog implementation. Interpret diagrams, select components, and build functional circuits under time pressure.',
+   rounds:[
+     {n:'ROUND 01', h:'Circuit Analysis', d:'Interpret circuit diagrams and select appropriate components under time pressure.'},
+     {n:'ROUND 02', h:'Breadboard Construction', d:'Build functional circuits based on provided specifications.'},
+     {n:'ROUND 03', h:'Optimization Challenge', d:'Modify and optimize circuits to meet performance criteria like voltage regulation.'}
+   ]},
+  {id:'paper', cat:'tech', num:'02', name:'Paper Presentation', form:'https://forms.gle/tYdfyMJnt1xaHvUU6',
+   img:'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=75',
+   desc:'Present original research, case studies or innovative ideas to expert judges.',
+   tags:['All Branches','Team of 2-3','Research'],
+   type:'Technical Event',
+   full:'A platform for students to showcase research ideas and analytical skills before a panel of judges, followed by a rigorous Q&A session.',
+   rounds:[
+     {n:'PHASE 01', h:'Paper Submission', d:'Submit original papers or case studies. Shortlisted teams proceed to the presentation stage.'},
+     {n:'PHASE 02', h:'Presentation', d:'Present your work before expert judges showcasing clarity, depth, and innovation.'},
+     {n:'PHASE 03', h:'Q&A Session', d:'Defend your research in a rigorous Q&A evaluating depth of understanding.'}
+   ]},
+  {id:'connexion', cat:'tech', num:'03', name:'Connexion', form:'https://forms.gle/h627HTRAZS1x44zc6',
+   img:'https://images.unsplash.com/photo-1580983218765-f663bec07b37?w=600&q=75',
+   desc:'Quizzes, design identification and component decoding challenges.',
+   tags:['All Branches','Team of 2','EEE / ECE Focus'],
+   type:'Technical Event',
+   full:'A knowledge-driven event testing analytical thinking and core understanding of electrical concepts through progressive competitive rounds.',
+   rounds:[
+     {n:'ROUND 01', h:'Technical Quiz', d:'Rapid-fire quizzes testing core understanding of electrical concepts and theory.'},
+     {n:'ROUND 02', h:'Design Identification', d:'Interpret circuit diagrams and identify component layouts under time constraints.'},
+     {n:'ROUND 03', h:'Component Decoding', d:'Advanced decoding challenges testing practical knowledge of electrical components.'}
+   ]},
+  {id:'spark', cat:'tech', num:'04', name:'Spark the Brain', form:'https://forms.gle/N2ZLmPYyNPuG3WzW6',
+   img:'https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?w=600&q=75',
+   desc:'Multi-level quiz from MCQ fundamentals to fault identification and advanced reasoning.',
+   tags:['All Branches','Individual','Multi-Level Quiz'],
+   type:'Technical Event',
+   full:'A dynamic technical quiz enhancing analytical thinking through progressively challenging levels from fundamentals to advanced reasoning.',
+   rounds:[
+     {n:'LEVEL 01', h:'MCQ Fundamentals', d:'Core electrical concepts, theories, and basic problem-solving skills.'},
+     {n:'LEVEL 02', h:'Visual Fault ID', d:'Real-life visual fault challenges assessing observation and applied knowledge.'},
+     {n:'LEVEL 03', h:'Advanced Reasoning', d:'Decision-making under pressure - the final test of analytical thinking.'}
+   ]},
+  {id:'thinklink', cat:'nontech', num:'01', name:'ThinkLink', form:'https://forms.gle/Lw5Y2RCfCNRHogUv5',
+   img:'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=75',
+   desc:'Memory challenges, whisper challenge and a hilarious product pitch round.',
+   tags:['Open to All','Team of 2','Interactive'],
+   type:'Non-Technical Event',
+   full:'An exciting event challenging memory, communication, creativity, and teamwork through fun interactive rounds.',
+   rounds:[
+     {n:'ROUND 01', h:'Memory Challenge', d:'Test observation skills and attention to detail in this fast-paced round.'},
+     {n:'ROUND 02', h:'Whisper Challenge', d:'Hilarious lip-reading challenge evaluating coordination and communication.'},
+     {n:'ROUND 03', h:'Product Pitch', d:'Showcase creativity and confidence in a wildly entertaining pitch round.'}
+   ]},
+  {id:'ludo', cat:'nontech', num:'02', name:'Human Ludo', form:'https://forms.gle/mwj8LjzEMPSzV9Bd9',
+   img:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&q=75',
+   desc:'Life-size Ludo where YOU are the token. Complete challenges to advance on the board.',
+   tags:['Open to All','Team of 4','High Energy'],
+   type:'Non-Technical Event',
+   full:'A life-size, high-energy version of Ludo where participants become tokens on a giant board, completing challenge-based squares to advance.',
+   rounds:[
+     {n:'STEP 01', h:'Roll the Dice', d:'Move your human token across the giant board. Strategy begins from move one.'},
+     {n:'STEP 02', h:'Complete Challenge', d:'Land on a square? Complete the task within the time limit to stay on the board.'},
+     {n:'STEP 03', h:'Race to Win', d:'Navigate snakes and ladders, outmaneuver rivals, and be first to finish.'}
+   ]},
+  {id:'blackout', cat:'nontech', num:'03', name:'Blackout Survival', form:'https://forms.gle/yNRFeMDjYG4baVcM6',
+   img:'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&q=75',
+   desc:'Snake and Ladder grid tasks plus power-failure roleplay. Teamwork when lights go out.',
+   tags:['Open to All','Team of 3','Challenge-Based'],
+   type:'Non-Technical Event',
+   full:'A fun, interactive event testing teamwork, creativity, and decision-making under simulated power failure situations.',
+   rounds:[
+     {n:'ROUND 01', h:'Power Grid Rush', d:'30-box Snake and Ladder grid with blackout-themed tasks. Ladders give bonus marks, snakes deduct.'},
+     {n:'ROUND 02', h:'Current Confusion', d:'Role play a real-life blackout scenario showcasing creativity and problem-solving.'}
+   ]},
+  {id:'idea', cat:'nontech', num:'04', name:'What an Idea', form:'https://forms.gle/HhFiQQ9au7eLMXpp7',
+   img:'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=600&q=75',
+   desc:'Business pitch event - present your startup idea to industry experts.',
+   tags:['Open to All','Team of 2-3','Business Pitch'],
+   type:'Non-Technical Event',
+   full:'An interactive business pitching event where teams present innovative startup ideas to industry experts, defending concepts under expert questioning.',
+   rounds:[
+     {n:'ROUND 01', h:'Idea Pitch', d:'Present your innovative product or startup idea. Make it compelling and market-ready.'},
+     {n:'ROUND 02', h:'Shark Tank Q&A', d:'Defend your idea under expert fire. Prove viability and your entrepreneurial vision.'},
+     {n:'ROUND 03', h:'Final Pitch', d:'Refine based on feedback and deliver a polished final pitch to claim the top spot.'}
+   ]},
+  {id:'d2', cat:'nontech', num:'05', name:'D Squared', form:'https://forms.gle/HD2KL1ynJK3YGUe28',
+   img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=75',
+   desc:'Case analysis, electrical debugging and final verdict - double the dare.',
+   tags:['Open to All','Duo','Double Dare'],
+   type:'Non-Technical Event',
+   full:'A multi-phase investigative challenge testing analytical reasoning and technical skills through case analysis and circuit debugging.',
+   rounds:[
+     {n:'PHASE 01', h:'Case File Analysis', d:'Analyze case files and evidence to identify suspects and build your theory.'},
+     {n:'PHASE 02', h:'Technical Debugging', d:'Diagnose and solve circuit-based electrical problems under time pressure.'},
+     {n:'PHASE 03', h:'Final Verdict', d:'Synthesize all evidence and present a well-reasoned verdict to the panel.'}
+   ]}
+];
+
+var SCH = [
+  {t:'09:00 AM', e:'Registration & Inauguration', v:'Main Auditorium'},
+  {t:'11:00 AM', e:'Analog Arena - Paper Presentation - Connexion', v:'Respective Venues'},
+  {t:'12:30 PM', e:'Lunch Break', v:'College Canteen'},
+  {t:'01:30 PM', e:'Spark the Brain - ThinkLink - Human Ludo', v:'Respective Venues'},
+  {t:'02:30 PM', e:'Blackout Survival - What an Idea - D Squared', v:'Respective Venues'},
+  {t:'04:30 PM', e:'Prize Distribution & Valedictory', v:'Main Auditorium'}
+];
+
+var grid = document.getElementById('grid');
+for (var i = 0; i < EV.length; i++) {
+  var ev = EV[i];
+  var card = document.createElement('div');
+  card.className = 'ev-card' + (ev.cat === 'tech' ? ' show' : '');
+  card.setAttribute('data-cat', ev.cat);
+  (function(eid) { card.onclick = function() { openModal(eid); }; })(ev.id);
+  var tagsHTML = '';
+  for (var t = 0; t < ev.tags.length; t++) tagsHTML += '<span class="meta">' + ev.tags[t] + '</span>';
+  card.innerHTML =
+    '<img class="ev-img" src="' + ev.img + '" alt="' + ev.name + '" loading="lazy">' +
+    '<div class="ev-body">' +
+      '<div class="ev-num">' + ev.num + '</div>' +
+      '<div class="ev-name">' + ev.name + '</div>' +
+      '<p class="ev-desc">' + ev.desc + '</p>' +
+      '<div class="ev-meta">' + tagsHTML + '</div>' +
+      '<span class="ev-link">View Details</span>' +
+    '</div>';
+  grid.appendChild(card);
+}
+
+var mc = document.getElementById('modals');
+for (var i = 0; i < EV.length; i++) {
+  var ev = EV[i];
+  var roundsHTML = '';
+  if (ev.rounds.length > 0) {
+    roundsHTML = '<div class="rounds-ttl">// Event Rounds</div><div class="rounds">';
+    for (var r = 0; r < ev.rounds.length; r++) {
+      roundsHTML += '<div class="round"><div class="round-n">' + ev.rounds[r].n + '</div><div class="round-h">' + ev.rounds[r].h + '</div><div class="round-d">' + ev.rounds[r].d + '</div></div>';
+    }
+    roundsHTML += '</div>';
+  }
+  var tagsHTML = '';
+  for (var t = 0; t < ev.tags.length; t++) tagsHTML += '<span class="m-tag">' + ev.tags[t] + '</span>';
+  var wrap = document.createElement('div');
+  wrap.className = 'overlay';
+  wrap.id = 'mo-' + ev.id;
+  (function(eid) { wrap.onclick = function(e) { if (e.target === wrap) closeModal(eid); }; })(ev.id);
+  wrap.innerHTML =
+    '<div class="modal">' +
+      '<div class="m-bar"><span class="m-brand">EPSILON 2K26</span><button class="m-close" onclick="closeModal(\'' + ev.id + '\')">X CLOSE</button></div>' +
+      '<img class="m-img" src="' + ev.img + '" alt="' + ev.name + '">' +
+      '<div class="m-hero"><div class="m-type">' + ev.type + '</div><h1 class="m-title">' + ev.name + '</h1><div class="m-tags">' + tagsHTML + '</div></div>' +
+      '<div class="m-body"><p>' + ev.full + '</p>' + roundsHTML +
+        '<div class="m-cta"><a href="' + ev.form + '" target="_blank" class="btn btn-p">Register Now</a><button class="m-back" onclick="closeModal(\'' + ev.id + '\')">Back to Events</button></div>' +
+      '</div>' +
+    '</div>';
+  mc.appendChild(wrap);
+}
+
+var fte = document.getElementById('ft-ev');
+for (var i = 0; i < EV.length; i++) {
+  if (EV[i].cat === 'tech') {
+    var a = document.createElement('a');
+    a.href = '#';
+    a.textContent = EV[i].name;
+    (function(eid) { a.onclick = function(e) { e.preventDefault(); openModal(eid); }; })(EV[i].id);
+    fte.appendChild(a);
+  }
+}
+
+var tl = document.getElementById('tl');
+for (var i = 0; i < SCH.length; i++) {
+  var item = document.createElement('div');
+  item.className = 'tl-item';
+  item.innerHTML = '<div class="tl-time">' + SCH[i].t + '</div><div class="tl-ev">' + SCH[i].e + '</div><div class="tl-v">' + SCH[i].v + '</div>';
+  tl.appendChild(item);
+}
+
+function openModal(id) {
+  var m = document.getElementById('mo-' + id);
+  if (!m) return;
+  m.classList.add('on');
+  document.body.style.overflow = 'hidden';
+  m.scrollTop = 0;
+}
+function closeModal(id) {
+  var m = document.getElementById('mo-' + id);
+  if (!m) return;
+  m.classList.remove('on');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var open = document.querySelectorAll('.overlay.on');
+    for (var i = 0; i < open.length; i++) { open[i].classList.remove('on'); }
+    document.body.style.overflow = '';
+  }
+});
+function filterEv(cat, btn) {
+  var tabs = document.querySelectorAll('.tab');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  btn.classList.add('active');
+  var cards = document.querySelectorAll('.ev-card');
+  for (var i = 0; i < cards.length; i++) cards[i].classList.remove('show');
+  var idx = 0;
+  for (var i = 0; i < cards.length; i++) {
+    if (cards[i].getAttribute('data-cat') === cat) {
+      (function(c, d) { setTimeout(function() { c.classList.add('show'); }, d); })(cards[i], idx * 60);
+      idx++;
+    }
+  }
+}
+window.addEventListener('scroll', function() {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+var cols = ['#cc0000','#ff2200','#ff6600','#ff4400','#aa0000'];
+var pt = document.getElementById('pt');
+for (var i = 0; i < 28; i++) {
+  var e = document.createElement('div');
+  e.className = 'ember';
+  var s = Math.random() * 4 + 1;
+  var c = cols[i % cols.length];
+  e.style.cssText = 'width:' + s + 'px;height:' + s + 'px;left:' + (Math.random()*100) + '%;background:' + c + ';box-shadow:0 0 ' + (s*4) + 'px ' + c + ';animation-duration:' + (Math.random()*18+10) + 's;animation-delay:' + (Math.random()*12) + 's';
+  pt.appendChild(e);
+}
+(function() {
+  var svg = document.getElementById('lsvg');
+  var W = window.innerWidth;
+  var lc = ['#ff0000','#ff6600','#ffcc00','#00cc44','#0066ff','#cc00cc','#ff3399'];
+  var n = Math.floor(W / 55);
+  if (n < 2) n = 2;
+  var d = 'M0,10';
+  for (var i = 0; i < n; i++) { var x = (i/(n-1))*W; var y = 8+Math.sin(i*.8)*4; d += ' L'+x+','+y; }
+  var wire = document.createElementNS('http://www.w3.org/2000/svg','path');
+  wire.setAttribute('d',d); wire.setAttribute('stroke','#333'); wire.setAttribute('stroke-width','1.5'); wire.setAttribute('fill','none');
+  svg.appendChild(wire);
+  for (var i = 0; i < n; i++) {
+    var x = (i/(n-1))*W; var wy = 8+Math.sin(i*.8)*4; var col = lc[i%lc.length];
+    var cord = document.createElementNS('http://www.w3.org/2000/svg','line');
+    cord.setAttribute('x1',x); cord.setAttribute('y1',wy); cord.setAttribute('x2',x); cord.setAttribute('y2',wy+10);
+    cord.setAttribute('stroke','#444'); cord.setAttribute('stroke-width','1'); svg.appendChild(cord);
+    var g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.classList.add('lb');
+    g.style.setProperty('--d',(1+Math.random()*2).toFixed(1)+'s');
+    g.style.setProperty('--dl',(Math.random()*3).toFixed(1)+'s');
+    g.style.setProperty('--c',col);
+    var b = document.createElementNS('http://www.w3.org/2000/svg','ellipse');
+    b.setAttribute('cx',x); b.setAttribute('cy',wy+17); b.setAttribute('rx','5'); b.setAttribute('ry','7'); b.setAttribute('fill',col);
+    g.appendChild(b); svg.appendChild(g);
+  }
+})();
+</script>
+</body>
+</html>
